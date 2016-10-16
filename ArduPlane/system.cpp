@@ -122,6 +122,8 @@ void Plane::init_ardupilot()
 
     mavlink_system.sysid = g.sysid_this_mav;
 
+    mavlink_system.sysid = g.sysid_this_mav;
+
     // initialise serial ports
     serial_manager.init();
     gcs().chan(0).setup_uart(serial_manager, AP_SerialManager::SerialProtocol_MAVLink, 0);
