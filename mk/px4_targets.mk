@@ -169,6 +169,14 @@ px4-v1-upload: px4-v1
 px4-v2-upload: px4-v2
 	$(RULEHDR)
 	$(v) $(PX4_MAKE) px4fmu-v2_APM upload
+	
+px4-v5-upload: px4-v5
+	$(RULEHDR)
+	$(v) $(PX4_MAKE) px4fmu-v5_APM upload
+	
+px4-v6-upload: px4-v6
+	$(RULEHDR)
+	$(v) $(PX4_MAKE) px4fmu-v6_APM upload
 
 px4-v3-upload: px4-v3
 	$(RULEHDR)

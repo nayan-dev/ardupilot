@@ -219,6 +219,8 @@ void AP_Camera::configure(float shooting_mode, float shutter_speed, float apertu
 
 void AP_Camera::control(float session, float zoom_pos, float zoom_step, float focus_lock, float shooting_cmd, float cmd_id)
 {
+    bool ret = false;
+    
     // take picture
     if (is_equal(shooting_cmd,1.0f)) {
         trigger_pic(false);
@@ -440,3 +442,41 @@ void AP_Camera::update_trigger()
         }
     }
 }
+
+#if defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
+void AP_Camera::switch_on(void){
+	if(_camera_switched_on){
+		return;
+	}
+    switch (_trigger_type)
+    {
+    case AP_CAMERA_TRIGGER_TYPE_SERVO:
+        return;                   // Servo operated camera --> do nothing
+        break;
+    case AP_CAMERA_TRIGGER_TYPE_RELAY:
+        _apm_relay->on(1);                  //replay high to switch on camera;
+        GCS_MAVLINK::send_statustext_all(MAV_SEVERITY_INFO, "Camera: Swiched ON \n");
+        break;
+    }
+    _camera_switched_on = true;
+}
+
+void AP_Camera::switch_off(void){
+
+	if(!_camera_switched_on){
+		return;
+	}
+
+    switch (_trigger_type)
+    {
+    case AP_CAMERA_TRIGGER_TYPE_SERVO:
+        return;                   // Servo operated camera --> do nothing
+        break;
+    case AP_CAMERA_TRIGGER_TYPE_RELAY:
+        _apm_relay->off(1);                  //replay low to switch on camera;
+        GCS_MAVLINK::send_statustext_all(MAV_SEVERITY_INFO, "Camera: Swiched OFF \n");
+        break;
+    }
+    _camera_switched_on = false;
+}
+#endif //defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
