@@ -144,7 +144,6 @@ px4:
 	$(MAKE) px4-v2
 	$(MAKE) px4-v3
 	$(MAKE) px4-v4
-	$(MAKE) px4-v4pro
 
 px4-clean: clean CHECK_MODULES px4-archives-clean px4-cleandep
 	$(v) /bin/rm -rf $(PX4_ROOT)/makefiles/build $(PX4_ROOT)/Build $(PX4_ROOT)/Images/*.px4 $(PX4_ROOT)/Images/*.bin
@@ -169,14 +168,6 @@ px4-v1-upload: px4-v1
 px4-v2-upload: px4-v2
 	$(RULEHDR)
 	$(v) $(PX4_MAKE) px4fmu-v2_APM upload
-	
-px4-v5-upload: px4-v5
-	$(RULEHDR)
-	$(v) $(PX4_MAKE) px4fmu-v5_APM upload
-	
-px4-v6-upload: px4-v6
-	$(RULEHDR)
-	$(v) $(PX4_MAKE) px4fmu-v6_APM upload
 
 px4-v3-upload: px4-v3
 	$(RULEHDR)
