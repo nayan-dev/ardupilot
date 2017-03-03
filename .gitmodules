@@ -1,12 +1,12 @@
 [submodule "modules/PX4Firmware"]
 	path = modules/PX4Firmware
-	url = https://nikhil@bitbucket.org/nikhil/px4firmware.git
+	url = https://github.com/nayan-dev/Firmware
 [submodule "modules/PX4NuttX"]
 	path = modules/PX4NuttX
 	url = git://github.com/ArduPilot/PX4NuttX.git
 [submodule "modules/uavcan"]
 	path = modules/uavcan
-	url = git://github.com/ArduPilot/uavcan.git
+	url = git://github.com/nayan-dev/uavcan.git
 [submodule "modules/waf"]
 	path = modules/waf
 	url = git://github.com/ArduPilot/waf.git
