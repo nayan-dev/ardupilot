@@ -21,10 +21,10 @@ export CCACHE_SLOPPINESS="include_file_ctime,include_file_mtime"
 
 # If CI_BUILD_TARGET is not set, build 3 different ones
 if [ -z "$CI_BUILD_TARGET" ]; then
-    CI_BUILD_TARGET="sitl linux px4-v2"
+    CI_BUILD_TARGET="sitl linux sparrow-v10 sparrow-v11"
 fi
 
-if [[ "$CI_BUILD_TARGET" == *"px4"* ]]; then
+if [[ "$CI_BUILD_TARGET" == *"sparrow"* ]]; then
     export CCACHE_MAXSIZE="1500M"
 elif [[ "$CI_BUILD_TARGET" == "sitltest" ]]; then
     export CCACHE_MAXSIZE="300M"
@@ -64,12 +64,12 @@ for t in $CI_BUILD_TARGET; do
     # only do make-based builds for GCC when target is PX4 or when launched by a scheduled job
     if [[ "$cxx_compiler" != "clang++" && ( $t == "px4"* || -n ${CI_CRON_JOB+1} ) ]]; then
         echo "Starting make based build for target ${t}..."
-        for v in "ArduPlane" "ArduCopter" "APMrover2" "ArduSub" "AntennaTracker"; do
+        for v in "ArduPlane"; do
             echo "Building $v for ${t}..."
 
             pushd $v
             make clean
-            if [[ $t == "px4"* ]]; then
+            if [[ $t == "sparrow"* ]]; then
                 make px4-cleandep
             fi
 
@@ -91,17 +91,17 @@ for t in $CI_BUILD_TARGET; do
         fi
     fi
 
-    if [[ -n ${waf_supported_boards[$t]} && -z ${CI_CRON_JOB+1} ]]; then
-        echo "Starting waf build for board ${t}..."
-        $waf configure --board $t --enable-benchmarks --check-c-compiler="$c_compiler" --check-cxx-compiler="$cxx_compiler"
-        $waf clean
-        $waf all
-        ccache -s && ccache -z
-
-        if [[ $t == linux ]]; then
-            $waf check
-        fi
-    fi
+#    if [[ -n ${waf_supported_boards[$t]} && -z ${CI_CRON_JOB+1} ]]; then
+#        echo "Starting waf build for board ${t}..."
+#        $waf configure --board $t --enable-benchmarks --check-c-compiler="$c_compiler" --check-cxx-compiler="$cxx_compiler"
+#        $waf clean
+#        $waf all
+#        ccache -s && ccache -z
+#
+#        if [[ $t == linux ]]; then
+#            $waf check
+#        fi
+#    fi
 done
 
 echo build OK
