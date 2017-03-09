@@ -61,8 +61,8 @@ function get_time {
 
 echo "Targets: $CI_BUILD_TARGET"
 for t in $CI_BUILD_TARGET; do
-    # only do make-based builds for GCC when target is PX4 or when launched by a scheduled job
-    if [[ "$cxx_compiler" != "clang++" && ( $t == "px4"* || -n ${CI_CRON_JOB+1} ) ]]; then
+    # only do make-based builds for GCC when target is Sparrow or when launched by a scheduled job
+    if [[ "$cxx_compiler" != "clang++" && ( $t == "sparrow"* || -n ${CI_CRON_JOB+1} ) ]]; then
         echo "Starting make based build for target ${t}..."
         for v in "ArduPlane"; do
             echo "Building $v for ${t}..."
