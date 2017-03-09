@@ -6,7 +6,7 @@
 	url = git://github.com/ArduPilot/PX4NuttX.git
 [submodule "modules/uavcan"]
 	path = modules/uavcan
-	url = git://github.com/nayan-dev/uavcan.git
+	url = git://github.com/nayan-dev/libuavcan.git
 [submodule "modules/waf"]
 	path = modules/waf
 	url = git://github.com/ArduPilot/waf.git
