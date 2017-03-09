@@ -54,6 +54,8 @@ script:
 before_cache:
   - ccache -z
 
+notifications:
+  slack: aus-india:8ODz7BnNXaDZei1VcvvbyDdT
 #notifications:
 #  webhooks:
 #    urls:
