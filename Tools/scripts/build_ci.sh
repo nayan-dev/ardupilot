@@ -39,12 +39,8 @@ if [ "$CI_BUILD_TARGET" = "sitltest" ]; then
     git submodule update
     (cd modules/mavlink/pymavlink && python setup.py build install --user)
     unset BUILDROOT
-    echo "Running SITL QuadCopter test"
-    Tools/autotest/autotest.py -j2 build.ArduCopter fly.ArduCopter
-    echo "Running SITL QuadPlane test"
-    Tools/autotest/autotest.py -j2 build.ArduPlane fly.QuadPlane
-    echo "Running SITL Rover test"
-    Tools/autotest/autotest.py -j2 build.APMrover2 drive.APMrover2
+    echo "Running SITL ArduPlane test"
+    Tools/autotest/autotest.py -j2 build.ArduPlane fly.ArduPlane
     exit 0
 fi
 
