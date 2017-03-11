@@ -629,6 +629,8 @@ void Plane::startup_INS_ground(void)
 #if HIL_SUPPORT
     if (g.hil_mode == 1) {
         while (barometer.get_last_update() == 0) {
+            barometer.update();
+            hal.console->printf("Last Update: %d\n", barometer._hil.last_update_ms);
             // the barometer begins updating when we get the first
             // HIL_STATE message
             gcs_send_text(MAV_SEVERITY_WARNING, "Waiting for first HIL_STATE message");
@@ -652,7 +654,11 @@ void Plane::startup_INS_ground(void)
 
     // read Baro pressure at ground
     //-----------------------------
-    init_barometer(true);
+    if(g.hil_mode == 1) {
+        init_barometer(false);
+    } else {
+       init_barometer(true);
+    }
 
     if (airspeed.enabled()) {
         // initialize airspeed sensor

@@ -340,10 +340,14 @@ void AP_Baro::update(void)
         _alt_offset_active = _alt_offset;
     }
 
-    if (!_hil_mode) {
+//    if (!_hil_mode) {
         for (uint8_t i=0; i<_num_drivers; i++) {
             drivers[i]->update();
         }
+//    }
+    if (_hil_mode) {
+        sensors[0].calibrated = true;
+        sensors[0].alt_ok = true;
     }
 
     // consider a sensor as healthy if it has had an update in the

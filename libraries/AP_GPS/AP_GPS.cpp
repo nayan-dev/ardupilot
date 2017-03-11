@@ -659,6 +659,9 @@ uint8_t
 AP_GPS::first_unconfigured_gps(void) const
 {
     for(int i = 0; i < GPS_MAX_INSTANCES; i++) {
+        if(_type[i] == GPS_TYPE_HIL) {
+            continue;
+        }
         if(_type[i] != GPS_TYPE_NONE && (drivers[i] == NULL || !drivers[i]->is_configured())) {
             return i;
         }

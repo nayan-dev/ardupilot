@@ -453,7 +453,6 @@ bool AP_Arming::pre_arm_checks(bool report)
     ret &= battery_checks(report);
     ret &= logging_checks(report);
     ret &= manual_transmitter_checks(report);
-    ret &= board_voltage_checks(report);
 
     return ret;
 }

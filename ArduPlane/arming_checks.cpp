@@ -27,6 +27,9 @@ bool AP_Arming_Plane::pre_arm_checks(bool report)
     // call parent class checks
     bool ret = AP_Arming::pre_arm_checks(report);
 
+    if(!plane.g.hil_mode) {
+        ret &= AP_Arming::board_voltage_checks(report);
+    }
     // Check airspeed sensor
     ret &= AP_Arming::airspeed_checks(report);
 
@@ -84,7 +87,7 @@ bool AP_Arming_Plane::pre_arm_checks(bool report)
     }
 
 #if HAVE_PX4_MIXER
-    if (plane.last_mixer_crc == -1) {
+    if (plane.last_mixer_crc == -1 && plane.g.hil_mode == 0) {
         if (report) {
             // if you ever get this error, a reboot is recommended.
             GCS_MAVLINK::send_statustext_all(MAV_SEVERITY_CRITICAL,"PreArm: Mixer error");
