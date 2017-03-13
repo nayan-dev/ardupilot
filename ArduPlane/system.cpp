@@ -151,8 +151,8 @@ void Plane::init_ardupilot()
 
     // we start by assuming USB connected, as we initialed the serial
     // port with SERIAL0_BAUD. check_usb_mux() fixes this if need be.    
-    usb_connected = true;
-    check_usb_mux();
+    usb_connected = false;
+    //check_usb_mux();
 
     // setup telem slots with serial ports
     for (uint8_t i = 1; i < MAVLINK_COMM_NUM_BUFFERS; i++) {
