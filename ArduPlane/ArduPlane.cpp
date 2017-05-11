@@ -103,9 +103,7 @@ void Plane::setup()
 
     init_ardupilot();
 
-#if defined(CONFIG_ARCH_BOARD_SP_V3)
-    	camera.switch_off();
-#endif
+	camera.switch_off();
 
     // initialise the main loop scheduler
     scheduler.init(&scheduler_tasks[0], ARRAY_SIZE(scheduler_tasks));
@@ -536,7 +534,7 @@ void Plane::handle_auto_mode(void)
     nav_cmd_id = mission.get_current_nav_cmd().id;
     if(nav_cmd_id == MAV_CMD_NAV_WAYPOINT) {
         camera.switch_on();
-    } else {
+    } else if(nav_cmd_id != MAV_CMD_NAV_TAKEOFF){   //Do not turnoff camera during restart mission
         camera.switch_off();
     }
 
@@ -631,9 +629,9 @@ void Plane::update_flight_mode(void)
 
     case RTL:
     case LOITER:
-#if defined(CONFIG_ARCH_BOARD_SP_V3)
+//#if defined(CONFIG_ARCH_BOARD_SP_V3)
     	camera.switch_off();
-#endif
+//#endif
         calc_nav_roll();
         calc_nav_pitch();
         calc_throttle();
