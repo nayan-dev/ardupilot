@@ -42,6 +42,11 @@
 // we don't have any sdcard
 #undef HAL_BOARD_LOG_DIRECTORY
 #undef HAL_BOARD_TERRAIN_DIRECTORY
+#undef HAL_OS_POSIX_IO
+#elif defined(CONFIG_ARCH_BOARD_PX4SPARROW_V10)
+#define CONFIG_HAL_BOARD_SUBTYPE HAL_BOARD_SUBTYPE_PX4SPARROW_V10
+#define HAL_STORAGE_SIZE            16384
+#define HAL_WITH_UAVCAN             1
 #else
 #error "Unknown PX4 board type"
 #endif
@@ -86,7 +91,7 @@
 #endif
 
 /* px4fmu-v4 */
-#ifdef CONFIG_ARCH_BOARD_PX4FMU_V4
+#if defined(CONFIG_ARCH_BOARD_PX4FMU_V4) || defined(CONFIG_ARCH_BOARD_PX4SPARROW_V10)
 #define HAL_PX4_HAVE_PX4IO 0
 #endif
 

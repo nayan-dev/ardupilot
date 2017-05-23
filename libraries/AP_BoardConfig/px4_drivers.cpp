@@ -29,7 +29,7 @@
 #include <nuttx/arch.h>
 #include <spawn.h>
 
-extern const AP_HAL::HAL& hal;
+ extern const AP_HAL::HAL& hal;
 
 AP_BoardConfig::px4_board_type AP_BoardConfig::px4_configured_board;
 
@@ -268,6 +268,7 @@ void AP_BoardConfig::px4_setup_drivers(void)
     case PX4_BOARD_PH2SLIM:
     case PX4_BOARD_AEROFC:
     case PX4_BOARD_PIXHAWK_PRO:
+    case PX4_BOARD_SPV10:
         break;
     default:
         sensor_config_error("Unknown board type");
@@ -505,6 +506,9 @@ void AP_BoardConfig::px4_autodetect(void)
 #elif defined(CONFIG_ARCH_BOARD_AEROFC_V1)
     px4.board_type.set_and_notify(PX4_BOARD_AEROFC);
     hal.console->printf("Detected Aero FC\n");
+#elif defined(CONFIG_ARCH_BOARD_PX4SPARROW_V10)
+    px4.board_type.set_and_notify(PX4_BOARD_SPV10);
+    hal.console->printf("Detected Sparrow V10\n");
 #endif
 }
 
