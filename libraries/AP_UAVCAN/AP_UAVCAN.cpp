@@ -465,6 +465,39 @@ void AP_UAVCAN::do_cyclic(void)
         if (error < 0) {
             hal.scheduler->delay_microseconds(1000);
         } else {
+            if (AP_BoardConfig::get_can_debug() >= 2) { //print CAN status at one hertz on console
+                static uint16_t print_cnt;
+                if (print_cnt++ == 1000) {
+                    // Memory status
+                    printf("\n\nPool allocator status:\n");
+                    printf("\tCapacity hard/soft: %u/%u blocks\n",
+                           _node_allocator.getBlockCapacityHardLimit(), _node_allocator.getBlockCapacity());
+                    printf("\tReserved:  %u blocks\n", _node_allocator.getNumReservedBlocks());
+                    printf("\tAllocated: %u blocks\n", _node_allocator.getNumAllocatedBlocks());
+
+                    // UAVCAN node perfcounters
+                    printf("UAVCAN node status:\n");
+                    printf("\tInternal failures: %llu\n", node->getInternalFailureCount());
+                    printf("\tTransfer errors:   %llu\n", node->getDispatcher().getTransferPerfCounter().getErrorCount());
+                    printf("\tRX transfers:      %llu\n", node->getDispatcher().getTransferPerfCounter().getRxTransferCount());
+                    printf("\tTX transfers:      %llu\n", node->getDispatcher().getTransferPerfCounter().getTxTransferCount());
+
+                    // CAN driver status
+                    for (unsigned i = 0; i < node->getDispatcher().getCanIOManager().getCanDriver().getNumIfaces(); i++) {
+                        printf("CAN%u status:\n", unsigned(i + 1));
+
+                        auto iface = node->getDispatcher().getCanIOManager().getCanDriver().getIface(i);
+                        printf("\tHW errors: %llu\n", iface->getErrorCount());
+
+                        auto iface_perf_cnt = node->getDispatcher().getCanIOManager().getIfacePerfCounters(i);
+                        printf("\tIO errors: %llu\n", iface_perf_cnt.errors);
+                        printf("\tRX frames: %llu\n", iface_perf_cnt.frames_rx);
+                        printf("\tTX frames: %llu\n", iface_perf_cnt.frames_tx);
+                    }
+                    print_cnt = 0;
+                }
+            }
+
             if (rc_out_sem_take()) {
                 if (_rco_armed) {
                     bool repeat_send;
