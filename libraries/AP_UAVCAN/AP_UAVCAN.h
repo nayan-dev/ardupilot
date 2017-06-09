@@ -15,7 +15,7 @@
 #include <AP_GPS/GPS_Backend.h>
 #include <AP_Baro/AP_Baro_Backend.h>
 #include <AP_Compass/AP_Compass.h>
-
+#include <AP_Airspeed/AP_Airspeed.h>
 #include <uavcan/helpers/heap_based_pool_allocator.hpp>
 
 #ifndef UAVCAN_NODE_POOL_SIZE
@@ -34,6 +34,7 @@
 #define AP_UAVCAN_MAX_GPS_NODES 4
 #define AP_UAVCAN_MAX_MAG_NODES 4
 #define AP_UAVCAN_MAX_BARO_NODES 4
+#define AP_UAVCAN_MAX_AIRSPEED_NODES 4
 
 #define AP_UAVCAN_SW_VERS_MAJOR 1
 #define AP_UAVCAN_SW_VERS_MINOR 0
@@ -83,6 +84,19 @@ public:
     uint8_t find_smallest_free_baro_node();
     void update_baro_state(uint8_t node);
 
+    struct Airspeed_Info {
+        float pressure;
+        float pressure_variance;
+        float temperature;
+        float temperature_variance;
+    };
+
+    uint8_t register_airspeed_listener(AP_Airspeed_Backend* new_listener,
+                                   uint8_t preferred_channel);
+    void remove_airspeed_listener(AP_Airspeed_Backend* rem_listener);
+    Airspeed_Info *find_airspeed_node(uint8_t node);
+    void update_airspeed_state(uint8_t node);
+
     struct Mag_Info {
         Vector3f mag_vector;
     };
@@ -118,6 +132,13 @@ private:
     Baro_Info _baro_node_state[AP_UAVCAN_MAX_BARO_NODES];
     uint8_t _baro_listener_to_node[AP_UAVCAN_MAX_LISTENERS];
     AP_Baro_Backend* _baro_listeners[AP_UAVCAN_MAX_LISTENERS];
+
+    // ------------------------- AIRSPEED
+    uint8_t _airspeed_nodes[AP_UAVCAN_MAX_BARO_NODES];
+    uint8_t _airspeed_node_taken[AP_UAVCAN_MAX_BARO_NODES];
+    Airspeed_Info _airspeed_node_state[AP_UAVCAN_MAX_AIRSPEED_NODES];
+    uint8_t _airspeed_listener_to_node[AP_UAVCAN_MAX_LISTENERS];
+    AP_Airspeed_Backend* _airspeed_listeners[AP_UAVCAN_MAX_LISTENERS];
 
     // ------------------------- MAG
     uint8_t _mag_nodes[AP_UAVCAN_MAX_MAG_NODES];

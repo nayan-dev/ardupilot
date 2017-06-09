@@ -37,6 +37,8 @@ public:
     // return the current temperature in degrees C, if available
     virtual bool get_temperature(float &temperature) = 0;
 
+    virtual void handle_airspeed_msg(float diff_pressure, float temperature) {return;};
+
 protected:
     int8_t get_pin(void) const;
     float get_psi_range(void) const;

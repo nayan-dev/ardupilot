@@ -145,6 +145,9 @@ public:
         TYPE_I2C_MS4525=1,
         TYPE_ANALOG=2,
         TYPE_I2C_MS5525=3,
+#if HAL_WITH_UAVCAN
+        TYPE_UAVCAN=4,
+#endif
     };
     
 private:

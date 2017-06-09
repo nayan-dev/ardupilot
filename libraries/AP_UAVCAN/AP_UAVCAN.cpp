@@ -274,6 +274,30 @@ static void air_data_st_cb1(const uavcan::ReceivedDataStructure<uavcan::equipmen
 static void (*air_data_st_cb_arr[2])(const uavcan::ReceivedDataStructure<uavcan::equipment::air_data::StaticTemperature>& msg)
         = { air_data_st_cb0, air_data_st_cb1 };
 
+static uavcan::Subscriber<uavcan::equipment::air_data::RawAirData> *air_data_aspd;
+static void air_data_aspd_cb(const uavcan::ReceivedDataStructure<uavcan::equipment::air_data::RawAirData>& msg, uint8_t mgr)
+{
+    if (hal.can_mgr[mgr] != nullptr) {
+        AP_UAVCAN *ap_uavcan = hal.can_mgr[mgr]->get_UAVCAN();
+        if (ap_uavcan != nullptr) {
+            AP_UAVCAN::Airspeed_Info *state = ap_uavcan->find_airspeed_node(msg.getSrcNodeID().get());
+            if (state != nullptr) {
+                state->pressure = msg.differential_pressure;
+                state->temperature = msg.static_air_temperature;
+
+                // after all is filled, update all listeners with new data
+                ap_uavcan->update_airspeed_state(msg.getSrcNodeID().get());
+            }
+        }
+    }
+}
+static void air_data_aspd_cb0(const uavcan::ReceivedDataStructure<uavcan::equipment::air_data::RawAirData>& msg)
+{   air_data_aspd_cb(msg, 0); }
+static void air_data_aspd_cb1(const uavcan::ReceivedDataStructure<uavcan::equipment::air_data::RawAirData>& msg)
+{   air_data_aspd_cb(msg, 1); }
+static void (*air_data_st_cb_arr[2])(const uavcan::ReceivedDataStructure<uavcan::equipment::air_data::RawAirData>& msg)
+        = { air_data_aspd_cb0, air_data_aspd_cb1 };
+
 // publisher interfaces
 static uavcan::Publisher<uavcan::equipment::actuator::ArrayCommand>* act_out_array[MAX_NUMBER_OF_CAN_DRIVERS];
 static uavcan::Publisher<uavcan::equipment::esc::RawCommand>* esc_raw[MAX_NUMBER_OF_CAN_DRIVERS];
@@ -301,6 +325,11 @@ AP_UAVCAN::AP_UAVCAN() :
     for (uint8_t i = 0; i < AP_UAVCAN_MAX_MAG_NODES; i++) {
         _mag_nodes[i] = UINT8_MAX;
         _mag_node_taken[i] = 0;
+    }
+
+    for (uint8_t i = 0; i < AP_UAVCAN_MAX_AIRSPEED_NODES; i++) {
+        _airspeed_nodes[i] = UINT8_MAX;
+        _airspeed_node_taken[i] = 0;
     }
 
     for (uint8_t i = 0; i < AP_UAVCAN_MAX_LISTENERS; i++) {
@@ -410,6 +439,12 @@ bool AP_UAVCAN::try_init(void)
                         return false;
                     }
 
+                    air_data_aspd = new uavcan::Subscriber<uavcan::equipment::air_data::RawAirData>(*node);
+                    const int air_data_aspd_start_res = air_data_aspd->start(air_data_aspd_cb_arr[_uavcan_i]);
+                    if (air_data_aspd_start_res < 0) {
+                        debug_uavcan(1, "UAVCAN Airspeed subscriber start problem\n\r");
+                        return false;
+                    }
                     act_out_array[_uavcan_i] = new uavcan::Publisher<uavcan::equipment::actuator::ArrayCommand>(*node);
                     act_out_array[_uavcan_i]->setTxTimeout(uavcan::MonotonicDuration::fromMSec(20));
                     act_out_array[_uavcan_i]->setPriority(uavcan::TransferPriority::OneLowerThanHighest);
