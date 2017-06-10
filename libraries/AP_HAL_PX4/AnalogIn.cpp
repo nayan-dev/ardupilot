@@ -331,7 +331,7 @@ void PX4AnalogIn::_timer_tick(void)
     }
 #endif
 
-#if defined(CONFIG_ARCH_BOARD_PX4FMU_V2) || defined(CONFIG_ARCH_BOARD_PX4FMU_V4) || defined(CONFIG_ARCH_BOARD_PX4FMU_V4PRO) || defined(CONFIG_ARCH_BOARD_PX4SPARROW_V10) || defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
+#if defined(CONFIG_ARCH_BOARD_PX4FMU_V2) || defined(CONFIG_ARCH_BOARD_PX4FMU_V4) || defined(CONFIG_ARCH_BOARD_PX4SPARROW_V10) || defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
     // check for new servorail data on FMUv2
     if (_servorail_handle != -1) {
         struct servorail_status_s servorail;

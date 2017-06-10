@@ -59,7 +59,7 @@ static PX4::SPIDeviceManager spi_mgr_instance;
 #define UARTD_DEFAULT_DEVICE "/dev/ttyS2"
 #define UARTE_DEFAULT_DEVICE "/dev/ttyS6"
 #define UARTF_DEFAULT_DEVICE "/dev/null"
-#elif defined(CONFIG_ARCH_BOARD_PX4SPARROW_V10)
+#elif defined(CONFIG_ARCH_BOARD_SPARROW_V10)
 #define UARTA_DEFAULT_DEVICE "/dev/ttyACM0"
 #define UARTB_DEFAULT_DEVICE "/dev/ttyS3"
 #define UARTC_DEFAULT_DEVICE "/dev/ttyS1"
