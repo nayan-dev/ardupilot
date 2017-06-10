@@ -375,6 +375,8 @@ void AP_BoardConfig::px4_setup_peripherals(void)
     const char *fmu_mode = "mode_serial";
 #elif defined(CONFIG_ARCH_BOARD_AEROFC_V1)
     const char *fmu_mode = "mode_rcin";
+#elif defined(CONFIG_ARCH_BOARD_SPARROW_V10)
+    const char *fmu_mode = "mode_pwm";
 #else
     const char *fmu_mode = "mode_pwm4";
 #endif
