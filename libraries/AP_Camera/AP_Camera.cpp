@@ -244,6 +244,10 @@ bool AP_Camera::control(float session, float zoom_pos, float zoom_step, float fo
     if (is_equal(shooting_cmd,1.0f)) {
         trigger_pic(false);
         ret = true;
+    } else if (is_equal(session, 1.0f)) {
+        //turn on the camera
+        switch_on();
+        ret = true;
     }
 
     mavlink_message_t msg;

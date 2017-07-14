@@ -532,11 +532,6 @@ void Plane::handle_auto_mode(void)
     }
 
     nav_cmd_id = mission.get_current_nav_cmd().id;
-    if(nav_cmd_id == MAV_CMD_NAV_WAYPOINT) {
-        camera.switch_on();
-    } else if(nav_cmd_id != MAV_CMD_NAV_TAKEOFF){   //Do not turnoff camera during restart mission
-        camera.switch_off();
-    }
 
     if (quadplane.in_vtol_auto()) {
         quadplane.control_auto(next_WP_loc);
