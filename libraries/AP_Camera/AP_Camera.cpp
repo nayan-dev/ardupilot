@@ -248,6 +248,9 @@ bool AP_Camera::control(float session, float zoom_pos, float zoom_step, float fo
         //turn on the camera
         switch_on();
         ret = true;
+    } else if (is_equal(session, 0.0f)) {
+        switch_off();
+        ret = true;
     }
 
     mavlink_message_t msg;

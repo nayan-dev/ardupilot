@@ -604,7 +604,7 @@ void Plane::update_flight_mode(void)
         ahrs.set_fly_forward(true);
     }
 
-    if(effective_mode != AUTO) {
+    if(effective_mode == RTL) {
         camera.switch_off();
     }
 
