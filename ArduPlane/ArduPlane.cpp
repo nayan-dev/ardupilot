@@ -227,6 +227,9 @@ void Plane::update_mount(void)
 void Plane::update_trigger(void)
 {
 #if CAMERA == ENABLED
+    if(control_mode != AUTO) {
+        return;
+    }
     camera.update_trigger();
 #endif
 }
