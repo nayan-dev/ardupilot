@@ -74,6 +74,7 @@ public:
     void switch_off(void);
 #endif //defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
     static const struct AP_Param::GroupInfo        var_info[];
+    void update_trigger();
 
 private:
     AP_Int8         _trigger_type;      // 0:Servo,1:Relay
@@ -129,8 +130,5 @@ private:
 
     // check if trigger pin has fired
     bool check_trigger_pin(void);
-
-    // return true if we are using a feedback pin
-    bool using_feedback_pin(void) const { return _feedback_pin > 0; }
 
 };

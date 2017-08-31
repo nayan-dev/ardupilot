@@ -3,7 +3,7 @@
 #if HAL_WITH_UAVCAN
 
 #include "AP_Airspeed_UAVCAN.h"
-#include <AP_BoardConfig/AP_BoardConfig.h>
+#include <AP_BoardConfig/AP_BoardConfig_CAN.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -12,7 +12,7 @@
 
 extern const AP_HAL::HAL& hal;
 
-#define debug_airspeed_uavcan(level, fmt, args...) do { if ((level) <= AP_BoardConfig::get_can_debug()) { hal.console->printf(fmt, ##args); }} while (0)
+#define debug_airspeed_uavcan(level, fmt, args...) do { if ((level) <= AP_BoardConfig_CAN::get_can_debug()) { hal.console->printf(fmt, ##args); }} while (0)
 
 // There is limitation to use only one UAVCAN airspeed now.
 
@@ -26,8 +26,8 @@ AP_Airspeed_UAVCAN::AP_Airspeed_UAVCAN(AP_Airspeed &airspeed) :
 
 AP_Airspeed_UAVCAN::~AP_Airspeed_UAVCAN()
 {
-    if (hal.can_mgr != nullptr) {
-        AP_UAVCAN *ap_uavcan = hal.can_mgr->get_UAVCAN();
+    if (hal.can_mgr[_manager] != nullptr) {
+        AP_UAVCAN *ap_uavcan = hal.can_mgr[_manager]->get_UAVCAN();
         if (ap_uavcan != nullptr) {
             ap_uavcan->remove_airspeed_listener(this);
             debug_airspeed_uavcan(2, "AP_Airspeed_UAVCAN destructed\n\r");
@@ -37,8 +37,8 @@ AP_Airspeed_UAVCAN::~AP_Airspeed_UAVCAN()
 
 bool AP_Airspeed_UAVCAN::init()
 {
-    if (hal.can_mgr != nullptr) {
-        AP_UAVCAN *ap_uavcan = hal.can_mgr->get_UAVCAN();
+    if (hal.can_mgr[_manager] != nullptr) {
+        AP_UAVCAN *ap_uavcan = hal.can_mgr[_manager]->get_UAVCAN();
         if (ap_uavcan != nullptr) {
             // Give time to receive some packets from CAN if airspeed sensor is present
             // This way it will get calibrated correctly

@@ -29,7 +29,8 @@ private:
     float pressure_sum;
     uint32_t temp_count;
     uint32_t press_count;
-  
+    uint8_t _manager;
+
     uint32_t last_sample_time_ms;
 
     AP_HAL::Semaphore *_sem_airspeed;

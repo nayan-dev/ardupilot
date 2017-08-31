@@ -91,10 +91,11 @@ public:
         float temperature_variance;
     };
 
-    uint8_t register_airspeed_listener(AP_Airspeed_Backend* new_listener,
-                                   uint8_t preferred_channel);
+    uint8_t register_airspeed_listener(AP_Airspeed_Backend* new_listener, uint8_t preferred_channel);
     void remove_airspeed_listener(AP_Airspeed_Backend* rem_listener);
     Airspeed_Info *find_airspeed_node(uint8_t node);
+    uint8_t find_smallest_free_airspeed_node();
+    uint8_t register_airspeed_listener_to_node(AP_Airspeed_Backend* new_listener, uint8_t node);
     void update_airspeed_state(uint8_t node);
 
     struct Mag_Info {
