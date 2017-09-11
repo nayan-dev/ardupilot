@@ -52,7 +52,7 @@ private:
     void bus_lock(bool lock);
     void _mtd_load(void);
     void _mtd_write(uint16_t line);
-#if defined (CONFIG_ARCH_BOARD_PX4FMU_V4) || (CONFIG_ARCH_BOARD_SPARROW_V10)
+#if defined(CONFIG_ARCH_BOARD_PX4FMU_V4) || defined(CONFIG_ARCH_BOARD_SPARROW_V10) || defined(CONFIG_ARCH_BOARD_SPARROW_V11)
     irqstate_t irq_state;
 #endif
 

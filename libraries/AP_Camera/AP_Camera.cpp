@@ -441,7 +441,7 @@ void AP_Camera::update_trigger()
     }
 }
 
-#if defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
+#if defined(CONFIG_ARCH_BOARD_SPARROW_V11) || defined(CONFIG_ARCH_BOARD_SPARROW_V11)
 void AP_Camera::switch_on(void){
 	if(_camera_switched_on){
 		return;
@@ -453,7 +453,6 @@ void AP_Camera::switch_on(void){
         break;
     case AP_CAMERA_TRIGGER_TYPE_RELAY:
         _apm_relay->on(1);                  //replay high to switch on camera;
-        GCS_MAVLINK::send_statustext_all(MAV_SEVERITY_INFO, "Camera: Swiched ON \n");
         break;
     }
     _camera_switched_on = true;
@@ -472,9 +471,8 @@ void AP_Camera::switch_off(void){
         break;
     case AP_CAMERA_TRIGGER_TYPE_RELAY:
         _apm_relay->off(1);                  //replay low to switch on camera;
-        GCS_MAVLINK::send_statustext_all(MAV_SEVERITY_INFO, "Camera: Swiched OFF \n");
         break;
     }
     _camera_switched_on = false;
 }
-#endif //defined(CONFIG_ARCH_BOARD_PX4SPARROW_V11)
+#endif //defined(CONFIG_ARCH_BOARD_SPARROW_V11)
