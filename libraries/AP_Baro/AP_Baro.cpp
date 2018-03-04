@@ -437,6 +437,10 @@ void AP_Baro::init(void)
         ADD_BACKEND(AP_Baro_MS56XX::probe(*this,
                                           std::move(hal.spi->get_device(HAL_BARO_MS5611_SPI_INT_NAME))));
         break;
+    case AP_BoardConfig::PX4_BOARD_FMUV10:
+        ADD_BACKEND(AP_Baro_MS56XX::probe(*this,
+                                          std::move(hal.spi->get_device(HAL_BARO_MS5611_SPI_INT_NAME))));
+        break;
     case AP_BoardConfig::PX4_BOARD_SPV11:
         ADD_BACKEND(AP_Baro_MS56XX::probe(*this,
                                           std::move(hal.i2c_mgr->get_device(0, HAL_BARO_MS5611_I2C_ADDR))));

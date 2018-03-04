@@ -270,6 +270,7 @@ void AP_BoardConfig::px4_setup_drivers(void)
     case PX4_BOARD_PIXHAWK_PRO:
     case PX4_BOARD_SPV10:
     case PX4_BOARD_SPV11:
+    case PX4_BOARD_FMUV10:
         break;
     default:
         sensor_config_error("Unknown board type");
@@ -377,6 +378,8 @@ void AP_BoardConfig::px4_setup_peripherals(void)
 #elif defined(CONFIG_ARCH_BOARD_AEROFC_V1)
     const char *fmu_mode = "mode_rcin";
 #elif defined(CONFIG_ARCH_BOARD_SPARROW_V10)
+    const char *fmu_mode = "mode_pwm";
+#elif defined(CONFIG_ARCH_BOARD_PX4FMU_V10)
     const char *fmu_mode = "mode_pwm";
 #elif defined(CONFIG_ARCH_BOARD_SPARROW_V11)
     const char *fmu_mode = "mode_pwm";
@@ -514,6 +517,9 @@ void AP_BoardConfig::px4_autodetect(void)
 #elif defined(CONFIG_ARCH_BOARD_SPARROW_V10)
     px4.board_type.set_and_notify(PX4_BOARD_SPV10);
     hal.console->printf("Detected Sparrow V10\n");
+#elif defined(CONFIG_ARCH_BOARD_PX4FMU_V10)
+    px4.board_type.set_and_notify(PX4_BOARD_FMUV10);
+    hal.console->printf("Detected fmu V10\n");
 
 #elif defined(CONFIG_ARCH_BOARD_SPARROW_V11)
     px4.board_type.set_and_notify(PX4_BOARD_SPV11);

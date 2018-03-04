@@ -51,6 +51,10 @@
 #define CONFIG_HAL_BOARD_SUBTYPE HAL_BOARD_SUBTYPE_PX4_SPARROW_V11
 #define HAL_STORAGE_SIZE            16384
 #define HAL_WITH_UAVCAN             1
+#elif defined(CONFIG_ARCH_BOARD_PX4FMU_V10)
+#define CONFIG_HAL_BOARD_SUBTYPE HAL_BOARD_SUBTYPE_PX4_V10
+#define HAL_STORAGE_SIZE            16384
+#define HAL_WITH_UAVCAN             1
 #else
 #error "Unknown PX4 board type"
 #endif
@@ -97,7 +101,7 @@
 #define HAL_BARO_MS5611_I2C_ADDR 0x77
 #endif
 /* px4fmu-v4 */
-#if defined(CONFIG_ARCH_BOARD_PX4FMU_V4) || defined(CONFIG_ARCH_BOARD_SPARROW_V10) || defined(CONFIG_ARCH_BOARD_SPARROW_V11)
+#if defined(CONFIG_ARCH_BOARD_PX4FMU_V4) || defined(CONFIG_ARCH_BOARD_SPARROW_V10) || defined(CONFIG_ARCH_BOARD_PX4FMU_V10) || defined(CONFIG_ARCH_BOARD_SPARROW_V11)
 #define HAL_PX4_HAVE_PX4IO 0
 #endif
 

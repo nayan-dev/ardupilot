@@ -47,6 +47,7 @@ public:
         PX4_BOARD_AUAV21   = 20,
         PX4_BOARD_SPV10    = 21,
         PX4_BOARD_SPV11    = 22,
+		PX4_BOARD_FMUV10    = 23,
         PX4_BOARD_OLDDRIVERS = 100,
 #endif
 #if CONFIG_HAL_BOARD == HAL_BOARD_VRBRAIN

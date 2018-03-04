@@ -575,6 +575,16 @@ class sparrow_v10(px4):
         self.romfs_exclude(['oreoled.bin'])
         self.with_uavcan = True
 
+class px4_v10(px4):
+	 name = 'px4-v10'
+	 def __init__(self):
+		 super(px4_v10, self).__init__()
+		 self.bootloader_name = 'px4fmuv10_bl.bin'
+		 self.board_name = 'px4fmu-v10'
+		 self.romfs_exclude(['oreoled.bin'])
+		 self.with_uavcan = True
+
+
 class sparrow_v11(px4):
     name = 'sparrow-v11'
     def __init__(self):
