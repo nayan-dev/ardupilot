@@ -91,11 +91,17 @@ SPIDesc SPIDeviceManager::device_table[] = {
 #if defined(PX4_SPIDEV_ACCEL_MAG)
     SPIDesc("lsm9ds0_am",   PX4_SPI_BUS_SENSORS, (spi_dev_e)PX4_SPIDEV_ACCEL_MAG, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
 #endif
+#if defined(PX4_SPIDEV_LSM9DS0_XM)
+    SPIDesc("lsm9ds0_am",   PX4_SPI_BUS_SENSORS, (spi_dev_e)PX4_SPIDEV_LSM9DS0_XM, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
+#endif
 #ifdef PX4_SPIDEV_EXT_ACCEL_MAG
     SPIDesc("lsm9ds0_ext_am", PX4_SPI_BUS_EXT, (spi_dev_e)PX4_SPIDEV_EXT_ACCEL_MAG, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
 #endif
 #if defined(PX4_SPIDEV_GYRO)
     SPIDesc("lsm9ds0_g",    PX4_SPI_BUS_SENSORS, (spi_dev_e)PX4_SPIDEV_GYRO, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
+#endif
+#if defined(PX4_SPIDEV_LSM9DS0_G)
+    SPIDesc("lsm9ds0_g",    PX4_SPI_BUS_SENSORS, (spi_dev_e)PX4_SPIDEV_LSM9DS0_G, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
 #endif
 #ifdef PX4_SPIDEV_EXT_GYRO
     SPIDesc("lsm9ds0_ext_g",PX4_SPI_BUS_EXT, (spi_dev_e)PX4_SPIDEV_EXT_GYRO, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
