@@ -75,6 +75,8 @@
 #define HAL_INS_LSM9DS0_G_NAME "lsm9ds0_g"
 #define HAL_INS_LSM9DS0_A_NAME "lsm9ds0_am"
 
+#define HAL_INS_LSM9DS1_AG_NAME "lsm9ds1_ag"
+
 #define HAL_INS_LSM9DS0_EXT_G_NAME "lsm9ds0_ext_g"
 #define HAL_INS_LSM9DS0_EXT_A_NAME "lsm9ds0_ext_am"
 

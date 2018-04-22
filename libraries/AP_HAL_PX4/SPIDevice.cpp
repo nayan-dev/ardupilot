@@ -103,6 +103,9 @@ SPIDesc SPIDeviceManager::device_table[] = {
 #if defined(PX4_SPIDEV_LSM9DS0_G)
     SPIDesc("lsm9ds0_g",    PX4_SPI_BUS_SENSORS, (spi_dev_e)PX4_SPIDEV_LSM9DS0_G, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
 #endif
+#if defined(PX4_SPIDEV_LSM9DS1_AG)
+    SPIDesc("lsm9ds1_ag",    PX4_SPI_BUS_SENSORS, (spi_dev_e)PX4_SPIDEV_LSM9DS1_AG, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
+#endif
 #ifdef PX4_SPIDEV_EXT_GYRO
     SPIDesc("lsm9ds0_ext_g",PX4_SPI_BUS_EXT, (spi_dev_e)PX4_SPIDEV_EXT_GYRO, SPIDEV_MODE3, 11*MHZ, 11*MHZ),
 #endif

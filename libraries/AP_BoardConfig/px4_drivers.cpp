@@ -519,7 +519,7 @@ void AP_BoardConfig::px4_autodetect(void)
     hal.console->printf("Detected Sparrow V10\n");
 #elif defined(CONFIG_ARCH_BOARD_PX4FMU_V10)
     px4.board_type.set_and_notify(PX4_BOARD_FMUV10);
-    hal.console->printf("Detected fmu V10\n");
+    hal.console->printf("Detected INv1\n");
 
 #elif defined(CONFIG_ARCH_BOARD_SPARROW_V11)
     px4.board_type.set_and_notify(PX4_BOARD_SPV11);
