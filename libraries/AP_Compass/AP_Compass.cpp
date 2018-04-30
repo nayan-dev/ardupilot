@@ -22,6 +22,7 @@
 #if HAL_WITH_UAVCAN
 #include <AP_BoardConfig/AP_BoardConfig_CAN.h>
 #include "AP_Compass_UAVCAN.h"
+#include "AP_Compass_UAVCAN2.h"
 #endif
 #include "AP_Compass_MMC3416.h"
 #include "AP_Compass.h"
@@ -771,13 +772,14 @@ void Compass::_detect_backends(void)
 
 #if HAL_WITH_UAVCAN
     if (_driver_enabled(DRIVER_UAVCAN)) {
-        bool added;
+        bool added, added2;
         do {
             added = _add_backend(AP_Compass_UAVCAN::probe(*this), "UAVCAN", true);
+            added2 = _add_backend(AP_Compass_UAVCAN2::probe(*this), "UAVCAN", true);
             if (_backend_count == COMPASS_MAX_BACKEND || _compass_count == COMPASS_MAX_INSTANCES) {
                 return;
             }
-        } while (added);
+        } while (added || added2);
     }
 #endif
 
