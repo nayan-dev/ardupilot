@@ -47,7 +47,7 @@ AP_Compass_UAVCAN2::~AP_Compass_UAVCAN2()
         if (hal.can_mgr[_manager] != nullptr) {
             AP_UAVCAN *ap_uavcan = hal.can_mgr[_manager]->get_UAVCAN();
             if (ap_uavcan != nullptr) {
-                ap_uavcan->remove_mag_listener(this);
+                ap_uavcan->remove_mag2_listener(this);
 
                 debug_mag_uavcan(2, "AP_Compass_UAVCAN2 destructed\n\r");
             }
@@ -64,7 +64,7 @@ AP_Compass_Backend *AP_Compass_UAVCAN2::probe(Compass &compass)
             if (hal.can_mgr[i] != nullptr) {
                 AP_UAVCAN *uavcan = hal.can_mgr[i]->get_UAVCAN();
                 if (uavcan != nullptr) {
-                    uint8_t freemag = uavcan->find_smallest_free_mag_node();
+                    uint8_t freemag = uavcan->find_smallest_free_mag2_node();
                     if (freemag != UINT8_MAX) {
                         sensor = new AP_Compass_UAVCAN2(compass);
                         if (sensor->register_uavcan_compass(i, freemag)) {
@@ -90,7 +90,7 @@ bool AP_Compass_UAVCAN2::register_uavcan_compass(uint8_t mgr, uint8_t node)
         if (ap_uavcan != nullptr) {
             _manager = mgr;
 
-            if (ap_uavcan->register_mag_listener_to_node(this, node)) {
+            if (ap_uavcan->register_mag2_listener_to_node(this, node)) {
                 _instance = register_compass();
 
                 struct DeviceStructure {
